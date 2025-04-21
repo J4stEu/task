@@ -1,0 +1,12 @@
+# Development
+.idea/
+.vscode/
+
+# Finder Desktop Services Store
+*.DS_Store
+
+# Temp
+*.swp
+*.*~
+*~
+~$*
