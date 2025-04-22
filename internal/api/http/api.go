@@ -3,15 +3,29 @@ package api
 import (
 	"net/http"
 
+	"github.com/J4stEu/task/internal/api/http/auth"
 	"github.com/J4stEu/task/internal/api/http/response"
+	"github.com/J4stEu/task/internal/api/http/session"
 	"github.com/J4stEu/task/internal/api/http/task"
 	"github.com/J4stEu/task/internal/service"
 )
 
-func InitMux(service *service.Service) *http.ServeMux {
+func InitMux(apiSecret []byte, service *service.Service) *http.ServeMux {
 	mux := http.NewServeMux()
 
+	sess := session.New(apiSecret)
+
 	path := "/api"
+
+	auth.Init(
+		mux,
+		sess,
+		path,
+		&auth.AuthService{
+			Auth: service.Auth,
+			User: service.User,
+		},
+	)
 
 	task.Init(
 		mux,

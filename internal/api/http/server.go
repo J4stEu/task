@@ -14,8 +14,8 @@ type HTTPServer struct {
 	httpServer *http.Server
 }
 
-func New(service *service.Service) *HTTPServer {
-	mux := InitMux(service)
+func New(apiSecret []byte, service *service.Service) *HTTPServer {
+	mux := InitMux(apiSecret, service)
 
 	requestTimeout := 10 * time.Second
 
