@@ -14,6 +14,8 @@ type Task interface {
 	GetByUserIDAndID(uint32, uint32) (model.Task, error)
 	// GetAllByUserID - get all tasks by user id
 	GetAllByUserID(uint32) ([]model.Task, error)
+	// GetAnalyticsByUserID - get analytics by user id
+	GetAnalyticsByUserID(uint32) (TasksUnalytics, error)
 
 	// Delete - delete task
 	Delete(uint32) error

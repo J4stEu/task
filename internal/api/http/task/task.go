@@ -41,3 +41,19 @@ func (p *Task) getTasks(w http.ResponseWriter, r *http.Request) {
 
 	response.Response(w, http.StatusOK, tasks)
 }
+
+func (p *Task) getAnalytics(w http.ResponseWriter, r *http.Request) {
+	rData, ok := r.Context().Value(middleware.ReqAuthDataKey).(middleware.AuthData)
+	if !ok {
+		response.Response(w, http.StatusUnauthorized, nil)
+		return
+	}
+
+	tasks, err := p.service.Task.GetAnalyticsByUserID(rData.User.ID)
+	if err != nil {
+		response.Response(w, http.StatusBadRequest, err)
+		return
+	}
+
+	response.Response(w, http.StatusOK, tasks)
+}

@@ -6,3 +6,10 @@ type CreateTaskDTO struct {
 }
 
 type UpdateTaskDTO CreateTaskDTO
+
+type TasksUnalytics struct {
+	Pending    uint32 `json:"pending"`
+	InProgress uint32 `json:"inProgress"`
+	Done  uint32 `json:"completed"`
+	Overdue    uint32 `json:"overdue"`
+}

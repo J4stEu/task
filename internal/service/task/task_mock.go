@@ -63,6 +63,32 @@ func (pm *TaskMock) GetAllByUserID(id uint32) ([]model.Task, error) {
 	return pm.repository.Task.GetAllByUserID(id)
 }
 
+func (pm *TaskMock) GetAnalyticsByUserID(id uint32) (TasksUnalytics, error) {
+	tasks, err := pm.repository.Task.GetAllByUserID(id)
+	if err != nil {
+		return TasksUnalytics{}, err
+	}
+
+	var analytics TasksUnalytics
+	for i := range tasks {
+		task := tasks[i]
+		if task.IsOverdue() {
+			analytics.Overdue += 1
+		}
+		if task.Status == model.TaskStatusPending {
+			analytics.Pending += 1
+		}
+		if task.Status == model.TaskStatusInProgress {
+			analytics.InProgress += 1
+		}
+		if task.Status == model.TaskStatusDone {
+			analytics.Done += 1
+		}
+	}
+
+	return analytics, nil
+}
+
 func (pm *TaskMock) Delete(id uint32) error {
 	return pm.repository.Task.Delete(id)
 }

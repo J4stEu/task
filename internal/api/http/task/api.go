@@ -35,4 +35,5 @@ func (p *Task) init(mux *http.ServeMux, authMiddleware *middleware.AuthMiddlewar
 
 	mux.HandleFunc(fmt.Sprintf("GET %s/{id}", taskPath), authM(p.getTask))
 	mux.HandleFunc(fmt.Sprintf("GET %s", taskPath), authM(p.getTasks))
+	mux.HandleFunc(fmt.Sprintf("GET %s/analytics", taskPath), authM(p.getAnalytics))
 }
