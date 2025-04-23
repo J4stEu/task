@@ -10,10 +10,10 @@ type Task interface {
 	// Update - update task
 	Update(model.Task) (model.Task, error)
 
-	// GetByID - get task by id
-	GetByID(uint32) (model.Task, error)
-	// GetAll - get all tasks
-	GetAll() ([]model.Task, error)
+	// GetByUserIDAndID - get task by user id and id
+	GetByUserIDAndID(uint32, uint32) (model.Task, error)
+	// GetAllByUserID - get all user tasks
+	GetAllByUserID(uint32) ([]model.Task, error)
 
 	Delete(uint32) error
 }

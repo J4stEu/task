@@ -18,7 +18,7 @@ func NewMock() User {
 }
 
 // Mock data
-func getMockedUsers() []model.User {
+func GetMockedUsers() []model.User {
 	users := make([]model.User, 0, 10)
 
 	randomDays := 24 * (1 + rand.Intn(30-1))
@@ -38,7 +38,7 @@ func getMockedUsers() []model.User {
 
 	adminCreatedAt := time.Now().Add(-time.Hour * time.Duration(randomDays))
 	users = append(users, model.User{
-		ID:        11,
+		ID:        10,
 		Login:     "admin",
 		Password:  "$2a$10$OLQy6vlCtfupVFJgdSJ80OMZc/77e0AiWCIfqBbqbgYDxmXJrhNn6", // test
 		CreatedAt: adminCreatedAt,
@@ -49,7 +49,7 @@ func getMockedUsers() []model.User {
 }
 
 func (*UserMock) New(user model.User) (model.User, error) {
-	users := getMockedUsers()
+	users := GetMockedUsers()
 	user.ID = users[len(users)-1].ID + 1
 	user.Login = fmt.Sprintf("Task %v", user.ID)
 
@@ -61,7 +61,7 @@ func (*UserMock) New(user model.User) (model.User, error) {
 }
 
 func (*UserMock) GetByID(id uint32) (model.User, error) {
-	users := getMockedUsers()
+	users := GetMockedUsers()
 	for i := range users {
 		user := users[i]
 		if user.ID == id {
@@ -73,7 +73,7 @@ func (*UserMock) GetByID(id uint32) (model.User, error) {
 }
 
 func (*UserMock) GetByLogin(login string) (model.User, error) {
-	users := getMockedUsers()
+	users := GetMockedUsers()
 	for i := range users {
 		user := users[i]
 		if user.Login == login {

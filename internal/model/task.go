@@ -3,7 +3,8 @@ package model
 import "time"
 
 type Task struct {
-	ID uint32 `json:"id"`
+	ID     uint32 `json:"id"`
+	UserID uint32 `json:"userID"`
 
 	Title       string `json:"title"`
 	Description string `json:"description"`

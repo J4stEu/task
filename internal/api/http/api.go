@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/J4stEu/task/internal/api/http/auth"
+	"github.com/J4stEu/task/internal/api/http/middleware"
 	"github.com/J4stEu/task/internal/api/http/response"
 	"github.com/J4stEu/task/internal/api/http/session"
 	"github.com/J4stEu/task/internal/api/http/task"
@@ -14,6 +15,11 @@ func InitMux(apiSecret []byte, service *service.Service) *http.ServeMux {
 	mux := http.NewServeMux()
 
 	sess := session.New(apiSecret)
+
+	authM := middleware.NewAuthMiddleware(sess, &middleware.AuthMiddlewareService{
+		Auth: service.Auth,
+		User: service.User,
+	})
 
 	path := "/api"
 
@@ -29,6 +35,7 @@ func InitMux(apiSecret []byte, service *service.Service) *http.ServeMux {
 
 	task.Init(
 		mux,
+		authM,
 		path,
 		&task.TaskService{
 			Task: service.Task,

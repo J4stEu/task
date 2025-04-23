@@ -8,7 +8,9 @@ import (
 	"github.com/go-loremipsum/loremipsum"
 
 	"github.com/J4stEu/task/internal/model"
+
 	repoMessage "github.com/J4stEu/task/internal/repository/message"
+	userRepo "github.com/J4stEu/task/internal/repository/user"
 )
 
 // Tasl repository implementation with mock data
@@ -39,6 +41,30 @@ func getMockedTasks() []model.Task {
 		})
 	}
 
+	users := userRepo.GetMockedUsers()
+	// WARN: Slices should be equal
+	for i := range tasks {
+		tasks[i].UserID = users[i].ID
+	}
+
+	admin := users[10]
+	for i := range 10 {
+		randomDays := 24 * (1 + rand.Intn(30-1))
+		createdAt := time.Now().Add(-time.Hour * time.Duration(randomDays))
+		loremIpsumGenerator := loremipsum.NewWithSeed(1234)
+
+		tasks = append(tasks, model.Task{
+			ID:     uint32(i) + 1,
+			UserID: admin.ID,
+
+			Title:       fmt.Sprintf("Admin task %v", uint32(i)+1),
+			Description: loremIpsumGenerator.Words(20),
+
+			CreatedAt: createdAt,
+			UpdatedAt: createdAt,
+		})
+	}
+
 	return tasks
 }
 
@@ -53,11 +79,11 @@ func (*TaskMock) Update(task model.Task) (model.Task, error) {
 	return task, nil
 }
 
-func (*TaskMock) GetByID(id uint32) (model.Task, error) {
+func (*TaskMock) GetByUserIDAndID(userID, id uint32) (model.Task, error) {
 	tasks := getMockedTasks()
 	for i := range tasks {
 		task := tasks[i]
-		if id == task.ID {
+		if userID == task.UserID && id == task.ID {
 			return task, nil
 		}
 	}
@@ -65,8 +91,17 @@ func (*TaskMock) GetByID(id uint32) (model.Task, error) {
 	return model.Task{}, repoMessage.ErrRecordNotFound
 }
 
-func (*TaskMock) GetAll() ([]model.Task, error) {
-	return getMockedTasks(), nil
+func (*TaskMock) GetAllByUserID(id uint32) ([]model.Task, error) {
+	tasks := getMockedTasks()
+
+	userTasks := make([]model.Task, 0, len(tasks))
+	for i := range tasks {
+		if tasks[i].UserID == id {
+			userTasks = append(userTasks, tasks[i])
+		}
+	}
+
+	return userTasks, nil
 }
 
 func (*TaskMock) Delete(id uint32) error {

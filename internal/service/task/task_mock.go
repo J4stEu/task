@@ -55,12 +55,12 @@ func updateTask(task *model.Task, updateData *UpdateTaskDTO) error {
 	return nil
 }
 
-func (pm *TaskMock) GetByID(id uint32) (model.Task, error) {
-	return pm.repository.Task.GetByID(id)
+func (pm *TaskMock) GetByUserIDAndID(userID, id uint32) (model.Task, error) {
+	return pm.repository.Task.GetByUserIDAndID(userID, id)
 }
 
-func (pm *TaskMock) GetAll() ([]model.Task, error) {
-	return pm.repository.Task.GetAll()
+func (pm *TaskMock) GetAllByUserID(id uint32) ([]model.Task, error) {
+	return pm.repository.Task.GetAllByUserID(id)
 }
 
 func (pm *TaskMock) Delete(id uint32) error {
