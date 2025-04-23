@@ -10,4 +10,6 @@ type User interface {
 	GetByID(uint32) (model.User, error)
 	// GetByLogin - get user by login
 	GetByLogin(string) (model.User, error)
+	// GetAll - get all users
+	GetAll() ([]model.User, error)
 }

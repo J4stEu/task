@@ -38,6 +38,8 @@ func (srv *HTTPServer) Run(
 	ctx context.Context,
 ) error {
 
+	srv.service.Task.WatchAnalytics(ctx)
+
 	fmt.Println("Running HTTP server: ", srv.httpServer.Addr)
 
 	return srv.httpServer.ListenAndServe()

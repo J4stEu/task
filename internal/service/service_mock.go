@@ -12,6 +12,7 @@ func NewMock(apiSecret []byte, repo *repository.Repository) *Service {
 		Task: task.NewMock(
 			&task.TaskMockRepo{
 				Task: repo.Task,
+				User: repo.User,
 			},
 		),
 		Auth: auth.NewMock(apiSecret, &auth.AuthMockRepo{

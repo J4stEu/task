@@ -3,6 +3,7 @@ package task
 import (
 	"github.com/J4stEu/task/internal/model"
 	"github.com/J4stEu/task/internal/repository/task"
+	"github.com/J4stEu/task/internal/repository/user"
 )
 
 // Task service implementation with mock repository
@@ -13,6 +14,7 @@ type TaskMock struct {
 // Task service repository
 type TaskMockRepo struct {
 	Task task.Task
+	User user.User
 }
 
 func NewMock(taskMockRepo *TaskMockRepo) Task {

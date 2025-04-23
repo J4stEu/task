@@ -83,3 +83,7 @@ func (*UserMock) GetByLogin(login string) (model.User, error) {
 
 	return model.User{}, repoMessage.ErrRecordNotFound
 }
+
+func (*UserMock) GetAll() ([]model.User, error) {
+	return GetMockedUsers(), nil
+}
