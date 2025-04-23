@@ -24,8 +24,14 @@ func NewMock() Task {
 // Mock data
 func getMockedTasks() []model.Task {
 	tasks := make([]model.Task, 0, 10)
+	statuses := []model.TaskStatus{
+		model.TaskStatusPending,
+		model.TaskStatusInProgress,
+		model.TaskStatusDone,
+	}
 
 	for i := range 10 {
+		randomStatus := statuses[rand.Intn(3)]
 		randomDays := 24 * (1 + rand.Intn(30-1))
 		createdAt := time.Now().Add(-time.Hour * time.Duration(randomDays))
 		loremIpsumGenerator := loremipsum.NewWithSeed(1234)
@@ -33,9 +39,12 @@ func getMockedTasks() []model.Task {
 		tasks = append(tasks, model.Task{
 			ID: uint32(i) + 1,
 
+			Status: randomStatus,
+
 			Title:       fmt.Sprintf("Task %v", uint32(i)+1),
 			Description: loremIpsumGenerator.Words(20),
 
+			DueDate:   createdAt,
 			CreatedAt: createdAt,
 			UpdatedAt: createdAt,
 		})
