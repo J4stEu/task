@@ -49,7 +49,7 @@ func (am *AuthMiddleware) AuthenticationMiddleware(next http.HandlerFunc) http.H
 		if err != nil {
 			cookie, err := am.session.GetCookie(r)
 			if err == nil && cookie != nil {
-				_ = am.session.DeleteCookie(w, r) //nolint:govet
+				_ = am.session.DeleteCookie(w, r) //nolint:errcheck
 			}
 
 			response.Response(w, http.StatusUnauthorized, nil)

@@ -15,5 +15,6 @@ func main() {
 	service := service.NewMock(apiSecret, repo)
 	httpServer := api.New(apiSecret, service)
 
-	_ = httpServer.Run(context.Background())
+	// TODO: use graceful shutdown and context management
+	_ = httpServer.Run(context.Background()) //nolint:errcheck
 }

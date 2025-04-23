@@ -3,11 +3,11 @@ package auth
 import (
 	"time"
 
-	"github.com/J4stEu/task/internal/model"
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 
+	"github.com/J4stEu/task/internal/model"
 	"github.com/J4stEu/task/internal/repository/token"
 	"github.com/J4stEu/task/internal/repository/user"
 )

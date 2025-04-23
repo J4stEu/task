@@ -1,0 +1,93 @@
+# linters settings: https://golangci-lint.run/usage/linters/
+linters-settings:
+  errcheck:
+    check-type-assertions: true # Report about not checking of errors in type assertions
+    check-blank: true # Report about assignment of errors to blank identifier
+  govet:
+    enable-all: true # Enable all analyzers
+    disable: [fieldalignment]
+  gocyclo:
+    min-complexity: 20 # Minimal code complexity to report. Default: 30 (recommended: 10-20)
+  goconst:
+    # min-len: 2 # Minimal length of string constant (default: 3)
+    # min-occurrences: 2 # Minimum occurrences of constant string count to trigger issue (default: 3)
+    numbers: true # Search also for duplicated numbers
+    # min: 2 # Minimum value, only works with goconst.numbers (default: 3)
+    # max: 2 # Maximum value, only works with goconst.numbers (default: 3)
+    # ignore-calls: false # Ignore when constant is not used as function argument (default: true)
+    ignore-tests: true
+  whitespace:
+    multi-if: true # Enforces newlines (or comments) after every multi-line if statement (default: false)
+    multi-func: true # Enforces newlines (or comments) after every multi-line function signature (default: false)
+  misspell:
+    locale: UK # Default is to use a neutral variety of English
+    ignore-words:
+      - serialize
+      - capitalize
+      - capitalized
+      - color
+      - behavior
+      - cozy
+      - plow
+      - standardize
+      - standardized
+      - normalized
+  unparam:
+    check-exported: true # Set to true if no external program/library imports your code
+  gocritic: # https://go-critic.com/overview
+    # By default, list of stable checks is used
+    # Additional checks
+    enabled-checks:
+      - rangeValCopy
+      - truncateCmp
+    disabled-checks:
+      - assignOp
+    settings:
+      captLocal: # Detects capitalized names for local variables.
+        paramsOnly: false # Whether to restrict checker to params only (default: true)
+      elseif: # Detects else with nested if statement that can be replaced with else-if
+        skipBalanced: false # Whether to skip balanced if-else pairs (default: true)
+      # rangeValCopy: # Detects expensive copies of for loop range expressions
+      # skipTestFuncs: false
+      truncateCmp: # Detects potential truncation issues when comparing ints of different sizes
+        skipArchDependent: false
+      underef: # Detects dereference expressions that can be omitted
+        skipRecvDeref: false
+  gci:
+    # Section configuration to compare against.
+    # Section names are case-insensitive and may contain parameters in ().
+    # The default order of sections is `standard > default > custom > blank > dot`,
+    # If `custom-order` is `true`, it follows the order of `sections` option.
+    # Default: ["standard", "default"]
+    sections:
+      - standard # Standard section: captures all standard packages.
+      - default # Default section: contains all imports that could not be matched to another section type.
+      # Custom sections: groups all imports with the specified Prefix.
+      - prefix(github.com/J4stEu)
+      # - blank # Blank section: contains all blank imports. This section is not present unless explicitly enabled.
+      # - dot # Dot section: contains all dot imports. This section is not present unless explicitly enabled.
+    # Skip generated files. Default: true
+    # skip-generated: false
+    # Enable custom order of sections. If `true`, make the section order the same as the order of `sections`. Default: false
+    custom-order: true
+linters:
+  disable-all: true
+  enable:
+    # - default
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    # additional
+    - goimports
+    - gocyclo
+    - goconst
+    - unconvert
+    - whitespace
+    - misspell
+    - unparam
+    - gocritic
+    - gci

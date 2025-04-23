@@ -10,7 +10,7 @@ import (
 func (a *Session) GetTokenValue(r *http.Request) (string, error) {
 	tokenValue, err := a.extractTokenValue(r)
 	if err != nil {
-		return "", fmt.Errorf("%%w: %w", errExtractToken, err)
+		return "", fmt.Errorf("%w: %w", errExtractToken, err)
 	}
 
 	return tokenValue, nil

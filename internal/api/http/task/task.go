@@ -9,7 +9,7 @@ import (
 )
 
 func (p *Task) getTask(w http.ResponseWriter, r *http.Request) {
-	id, _ := strconv.ParseUint(r.PathValue("id"), 10, 32)
+	id, _ := strconv.ParseUint(r.PathValue("id"), 10, 32) //nolint:errcheck
 
 	rData, ok := r.Context().Value(middleware.ReqAuthDataKey).(middleware.AuthData)
 	if !ok {

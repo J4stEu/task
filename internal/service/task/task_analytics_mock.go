@@ -16,7 +16,7 @@ func (pm *TaskMock) WatchAnalytics(ctx context.Context) {
 		default:
 			users, err := pm.repository.User.GetAll()
 			if err != nil {
-				fmt.Printf("Failed to watch analytics", err)
+				fmt.Println("Failed to watch analytics", err)
 				SleepWithCTX(ctx, interval)
 				continue
 			}
@@ -28,7 +28,7 @@ func (pm *TaskMock) WatchAnalytics(ctx context.Context) {
 					continue
 				}
 
-				fmt.Printf("Analytics of user %v: %v\n", users[i].ID, userAnalytics)
+				_, _ = fmt.Printf("Analytics of user %v: %+v\n", users[i].ID, userAnalytics) //nolint:errcheck
 			}
 
 			SleepWithCTX(ctx, interval)

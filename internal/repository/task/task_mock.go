@@ -8,7 +8,6 @@ import (
 	"github.com/go-loremipsum/loremipsum"
 
 	"github.com/J4stEu/task/internal/model"
-
 	repoMessage "github.com/J4stEu/task/internal/repository/message"
 	userRepo "github.com/J4stEu/task/internal/repository/user"
 )
